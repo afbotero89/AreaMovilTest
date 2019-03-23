@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let realm = try! Realm()
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         // Do any additional setup after loading the view, typically from a nib.
     }
 

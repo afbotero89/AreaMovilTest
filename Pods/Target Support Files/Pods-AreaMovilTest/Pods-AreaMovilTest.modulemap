@@ -1,0 +1,6 @@
+framework module Pods_AreaMovilTest {
+  umbrella header "Pods-AreaMovilTest-umbrella.h"
+
+  export *
+  module * { export * }
+}
