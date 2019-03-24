@@ -16,6 +16,8 @@
 		A14AEB062245D730007E72E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14AEB042245D730007E72E8 /* LaunchScreen.storyboard */; };
 		A14AEB112245D731007E72E8 /* AreaMovilTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14AEB102245D731007E72E8 /* AreaMovilTestTests.swift */; };
 		A14AEB1C2245D731007E72E8 /* AreaMovilTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14AEB1B2245D731007E72E8 /* AreaMovilTestUITests.swift */; };
+		A1DC06342246E54F009ECEEF /* GitUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC06332246E54F009ECEEF /* GitUsers.swift */; };
+		A1DC06362246F651009ECEEF /* UsersCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC06352246F651009ECEEF /* UsersCheck.swift */; };
 		E991319C433CBC22CE39B455 /* Pods_AreaMovilTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB554084B06E9D7054A2CE49 /* Pods_AreaMovilTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		A14AEB172245D731007E72E8 /* AreaMovilTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AreaMovilTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14AEB1B2245D731007E72E8 /* AreaMovilTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaMovilTestUITests.swift; sourceTree = "<group>"; };
 		A14AEB1D2245D731007E72E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1DC06332246E54F009ECEEF /* GitUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUsers.swift; sourceTree = "<group>"; };
+		A1DC06352246F651009ECEEF /* UsersCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCheck.swift; sourceTree = "<group>"; };
 		AB554084B06E9D7054A2CE49 /* Pods_AreaMovilTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AreaMovilTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A9CF9F6AEE06A75D13BAA0 /* Pods-AreaMovilTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AreaMovilTestTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AreaMovilTestTests/Pods-AreaMovilTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F220688C9C91ED5AD1D0B37C /* Pods-AreaMovilTestUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AreaMovilTestUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AreaMovilTestUITests/Pods-AreaMovilTestUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 			children = (
 				A14AEAFB2245D72D007E72E8 /* AppDelegate.swift */,
 				A14AEAFD2245D72D007E72E8 /* ViewController.swift */,
+				A1DC06352246F651009ECEEF /* UsersCheck.swift */,
+				A1DC06332246E54F009ECEEF /* GitUsers.swift */,
 				A14AEAFF2245D72D007E72E8 /* Main.storyboard */,
 				A14AEB022245D730007E72E8 /* Assets.xcassets */,
 				A14AEB042245D730007E72E8 /* LaunchScreen.storyboard */,
@@ -395,6 +401,8 @@
 			files = (
 				A14AEAFE2245D72D007E72E8 /* ViewController.swift in Sources */,
 				A14AEAFC2245D72D007E72E8 /* AppDelegate.swift in Sources */,
+				A1DC06342246E54F009ECEEF /* GitUsers.swift in Sources */,
+				A1DC06362246F651009ECEEF /* UsersCheck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
