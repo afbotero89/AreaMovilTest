@@ -25,8 +25,6 @@ class ViewController: UIViewController {
         
         let realm = try! Realm()
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
-        
         notifications()
         
         loadDefaultUser(realm: realm)
@@ -111,7 +109,13 @@ class ViewController: UIViewController {
         print(notification.userInfo!)
         DispatchQueue.main.async {
             let userData = notification.userInfo
-            self.userImage.image = userData!["userImage"]! as? UIImage
+            
+            UIView.transition(with: self.userImage,
+                              duration:1.0,
+                              options: .transitionFlipFromLeft,
+                              animations: { self.userImage.image = userData!["userImage"]! as? UIImage },
+                              completion: nil)
+            //self.userImage.image = userData!["userImage"]! as? UIImage
             self.userName.text = userData!["userName"]! as? String
         }
     }
@@ -121,6 +125,11 @@ class ViewController: UIViewController {
         usersSearch.getUserByID(id: userIdInputText.text!)
     }
     
+    /**
+     Display alert message when doesn't find any user.
+     - Parameters: notifications instance
+     - Returns: None
+     */
     @objc func UserNotFoundAlert(notification:NSNotification){
         DispatchQueue.main.async {
             let alert = UIAlertController(title: NSLocalizedString("User not found", comment: ""), message: NSLocalizedString("Check the login or user id", comment: ""), preferredStyle: .alert)
