@@ -13,9 +13,14 @@ class UsersCheck : Object{
     
     var userID:String?
     
-    func getUserByID(id:Int){
+    /**
+     Gets the users by id (must be Int)
+     - Parameters: User id
+     - Returns: none
+     */
+    func getUserByID(id:String){
         
-        userID = String(id)
+        userID = id
         
         var apiGitUrl = URLRequest(url: URL(string:"https://api.github.com/users/\(id)")!)
         
@@ -26,14 +31,26 @@ class UsersCheck : Object{
         let task = URLSession.shared.dataTask(with: apiGitUrl, completionHandler: {
             data, response, error in
             
-            let str = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! [String:AnyObject]
+            if (data != nil){
+                
+                let str = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! [String:AnyObject]
             
-            self.downloadImageFromURL(userGitInfo: str)
-
+                if(str.count == 2){
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "displayUserNotFoundAlert"), object: nil, userInfo: nil)
+                }else{
+                    self.downloadImageFromURL(userGitInfo: str)
+                }
+            }
         })
         task.resume()
     }
     
+    /**
+     The profile image must be download in order to update de image view
+     - Parameters:
+        - userGitInfo : Dictionary that has all user git information
+     - Returns: none
+     */
     func downloadImageFromURL(userGitInfo : [String : AnyObject]){
         
         let url = userGitInfo["avatar_url"]! as! String
@@ -45,7 +62,7 @@ class UsersCheck : Object{
         if (nameValue != nil) {
             userName = (userGitInfo["name"]! as? String)!
         }else{
-            userName = "Empty"
+            userName = "Null"
         }
         
         
@@ -68,7 +85,7 @@ class UsersCheck : Object{
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateUserImage"), object: nil, userInfo: ["userImage":image as Any,"userName":userName])
                         
-                        self.updateUserIdIntoDB(id: self.userID!)
+                        self.updateUserIdIntoDB(id: self.userID!, userName: userName, userImage: image!)
                         
                         // Do something with your image.
                     } else {
@@ -83,13 +100,22 @@ class UsersCheck : Object{
         downloadPicTask.resume()
     }
     
-    func updateUserIdIntoDB(id:String){
+    
+    /**
+     Insert the user that already find with git API into the field with id = 1
+     - Parameters:
+        - id : User git ID
+     - Returns: none
+     */
+    func updateUserIdIntoDB(id:String, userName:String, userImage: UIImage){
         DispatchQueue(label: "background").async {
             autoreleasepool {
                 let realm = try! Realm()
                 let gitUsers = realm.objects(GitUsers.self).filter("id == 1").first
                 try! realm.write {
-                    gitUsers!.last_git_user_id = id
+                    gitUsers!.lastGitUserId = id
+                    gitUsers!.userNameDB = userName
+                    gitUsers!.userImageDB = (userImage.pngData()! as NSData)
                 }
             }
         }

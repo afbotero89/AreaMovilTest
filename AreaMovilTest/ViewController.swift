@@ -27,31 +27,20 @@ class ViewController: UIViewController {
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        let git_users = GitUsers()
-        git_users.last_git_user_id = "test"
-        
-        try! realm.write {
-            //realm.deleteAll()
-            let gitUsers = realm.objects(GitUsers.self).filter("id == 1").first
-            
-            let lastUserID = gitUsers!["last_git_user_id"]! as! NSString
-            
-            print(lastUserID)
-            
-            usersSearch.getUserByID(id: Int(lastUserID as String)!)
-            
-            if(git_users != nil){
-                realm.deleteAll()
-                realm.add(git_users)
-            }
-            
-        }
-        
         notifications()
+        
+        loadDefaultUser(realm: realm)
+        
         
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    
+    /**
+     Creates the notifications (updateUserImage)
+     - Parameters: none
+     - Returns: none
+     */
     func notifications(){
         NotificationCenter.default.addObserver(self,
                                                
@@ -60,8 +49,64 @@ class ViewController: UIViewController {
                                                name: NSNotification.Name(rawValue: "updateUserImage"),
                                                
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               
+                                               selector: #selector(ViewController.UserNotFoundAlert),
+                                               
+                                               name: NSNotification.Name(rawValue: "displayUserNotFoundAlert"),
+                                               
+                                               object: nil)
+        
     }
     
+    /**
+     Loads the default user stored in realm database
+     - Parameters: intance realm database
+     - Returns: none
+     */
+    func loadDefaultUser(realm:Realm){
+        
+        let git_users = GitUsers()
+        
+        try! realm.write {
+            
+            let gitUsers = realm.objects(GitUsers.self).filter("id == 1").first
+            
+            if(gitUsers != nil){
+                
+                if(gitUsers!["lastGitUserId"] != nil){
+                
+                    let lastUserID = gitUsers!["lastGitUserId"]! as! NSString
+                
+                    let userNameDB = gitUsers!["userNameDB"]! as! NSString
+                    
+                    var userImageDB = gitUsers!["userImageDB"]!
+                    
+                    userImageDB = UIImage(data:userImageDB as! Data,scale:1.0) as Any
+                    
+                    userName.text = userNameDB as String
+                    
+                    userImage.image = (userImageDB as! UIImage)
+                    
+                    print(lastUserID)
+                
+                    //usersSearch.getUserByID(id: Int(lastUserID as String)!)
+                
+                }
+                //realm.deleteAll()
+                
+            }else{
+                realm.add(git_users)
+            }
+        }
+    }
+    
+    /**
+     Updates de user image and user name when has been finished the query to git API
+     - Parameters: notifications instance
+     - Returns: none
+     */
     @objc func updateUserImage(notification:NSNotification){
         print(notification.userInfo!)
         DispatchQueue.main.async {
@@ -73,8 +118,15 @@ class ViewController: UIViewController {
     
     @IBAction func searchButton(_ sender: Any) {
         
-        usersSearch.getUserByID(id: Int(userIdInputText.text!)!)
+        usersSearch.getUserByID(id: userIdInputText.text!)
     }
     
+    @objc func UserNotFoundAlert(notification:NSNotification){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: NSLocalizedString("User not found", comment: ""), message: NSLocalizedString("Check the login or user id", comment: ""), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .default) { _ in })
+            self.present(alert, animated: true){}
+        }
+    }
 }
 

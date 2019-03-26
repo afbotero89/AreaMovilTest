@@ -11,5 +11,7 @@ import RealmSwift
 
 class GitUsers: Object{
     @objc dynamic var id = 1
-    @objc dynamic var last_git_user_id : String?
+    @objc dynamic var lastGitUserId : String?
+    @objc dynamic var userImageDB : NSData?
+    @objc dynamic var userNameDB : String?
 }
